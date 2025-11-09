@@ -8,12 +8,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        include:
-          - job_id: matrix-1583f4c-1
-          - job_id: matrix-1583f4c-2
-          - job_id: matrix-1583f4c-3
+        job_id: [matrix-1583f4c-1, matrix-1583f4c-2, matrix-1583f4c-3]
+
     steps:
       - name: "Verification step for 23f3004197@ds.study.iitm.ac.in"
         run: echo "This step is being checked by the grader!"
@@ -21,14 +20,14 @@ jobs:
       - name: "Checkout repository"
         uses: actions/checkout@v4
 
-      - name: "Matrix job identifier"
+      - name: "Matrix identifier step"
         id: matrix-1583f4c
         run: echo "Running matrix job ${{ matrix.job_id }}"
 
-      - name: "Build artifact for ${{ matrix.job_id }}"
+      - name: "Create build artifact for ${{ matrix.job_id }}"
         run: |
           mkdir -p artifacts
-          echo "Build content for ${{ matrix.job_id }}" > artifacts/build-1583f4c-${{ matrix.job_id }}.txt
+          echo "This is non-empty build content for ${{ matrix.job_id }}" > artifacts/build-1583f4c-${{ matrix.job_id }}.txt
 
       - name: "Upload build artifact"
         uses: actions/upload-artifact@v4
